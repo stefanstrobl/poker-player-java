@@ -11,8 +11,13 @@ public class Player {
     public static int betRequest(JsonElement request) {
         try {
 
-            List<Card> allCards = new EvalCards(request).getAllCards();
-            if (CardCombination.hasPair(allCards)) {
+            EvalCards evalCards = new EvalCards(request);
+
+            List<Card> allCards = evalCards.getAllCards();
+            List<Card> myCards = evalCards.getMyCards();
+            List<Card> communityCards = evalCards.getCommunityCards();
+
+            if (CardCombination.hasPair(myCards, communityCards)) {
                 return Integer.MAX_VALUE;
             }
             if (GameStateResolver.isPreFlop(request) && SingleCardEvaluator.hasKingOrAce(allCards)) {
