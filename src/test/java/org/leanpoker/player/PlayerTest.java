@@ -6,14 +6,6 @@ import static org.junit.Assert.assertEquals;
 
 public class PlayerTest {
 
-//    @Test
-//    public void testBetRequest() throws Exception {
-//
-//        JsonElement jsonElement = new JsonParser().parse("{\"minimum_raise\": \"220\", \"key2\": \"value2\"}");
-//
-//        assertEquals(220, Player.betRequest(jsonElement));
-//
-//    }
     @Test
     public void pairBetAll() throws Exception {
         assertEquals(Integer.MAX_VALUE, Player.betRequest(EvalCardsTest.jsonWithCommunityCards.getAsJsonObject()));
