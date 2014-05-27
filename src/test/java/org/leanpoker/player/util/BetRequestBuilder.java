@@ -38,7 +38,7 @@ public class BetRequestBuilder {
             "            \"status\": \"active\",\n" +
             "            \"version\": \"Default random player\",\n" +
             "            \"stack\": 1590,\n" +
-            "            \"bet\": 80,\n" +
+            "            \"bet\": %d,\n" +
             "            \"hole_cards\": [                         \n" +
             "            ]\n" +
             "        },\n" +
@@ -58,9 +58,10 @@ public class BetRequestBuilder {
     private int smallBlind = 10;
     private int currentBuyIn = 320;
     private int dealer = 1;
+    private int ourBet = 80;
 
     public JsonObject get() {
-        String formattedJson = String.format(jsonStringWithWildcards, smallBlind, currentBuyIn, dealer);
+        String formattedJson = String.format(jsonStringWithWildcards, smallBlind, currentBuyIn, dealer, ourBet);
         JsonElement parse = new JsonParser().parse(formattedJson);
         if (holeCards.size() != 2) {
             addHoleCard(Suite.HEARTS, Rank.SIX);
@@ -95,6 +96,11 @@ public class BetRequestBuilder {
 
     public BetRequestBuilder dealer(int dealer) {
         this.dealer = dealer;
+        return this;
+    }
+
+    public BetRequestBuilder ourBet(int ourBet) {
+        this.ourBet = ourBet;
         return this;
     }
 

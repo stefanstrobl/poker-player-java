@@ -34,11 +34,15 @@ public class EvalCards {
     }
 
     public List<Card> getMyCards() {
+        JsonObject jsonPlayer = getJsonPlayer();
+        return getCards(jsonPlayer.getAsJsonArray("hole_cards"));
+    }
+
+    public JsonObject getJsonPlayer() {
         JsonObject asJsonObject = json.getAsJsonObject();
         int positionOfPlayer = asJsonObject.get("in_action").getAsInt();
         JsonArray players = asJsonObject.getAsJsonArray("players");
-        JsonObject jsonPlayer = players.get(positionOfPlayer).getAsJsonObject();
-        return getCards(jsonPlayer.getAsJsonArray("hole_cards"));
+        return players.get(positionOfPlayer).getAsJsonObject();
     }
 
     public List<Card> getAllCards() {
