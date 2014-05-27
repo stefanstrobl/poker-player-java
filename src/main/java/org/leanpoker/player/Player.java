@@ -14,7 +14,7 @@ public class Player {
             int minRaise = getMinRaise(jsonObject);
             System.out.println(minRaise);
 
-            return 1000;
+            return 100000;
 
         } catch (Exception e) {
             e.printStackTrace();
