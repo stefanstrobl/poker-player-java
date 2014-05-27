@@ -1,24 +1,21 @@
-package org.leanpoker.player;
+package org.leanpoker.player.util;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.junit.Test;
-import org.leanpoker.player.util.BetRequestBuilder;
+import org.leanpoker.player.Rank;
+import org.leanpoker.player.Suite;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+/**
+ *
+ */
+public class BetRequestBuilder {
 
-public class EvalCardsTest {
-
-    public static JsonElement jsonWithCommunityCards = new BetRequestBuilder()
-            .createCommunityCard(Suite.SPADES, Rank.FOUR)
-            .createCommunityCard(Suite.HEARTS, Rank.ACE)
-            .createCommunityCard(Suite.CLUBS, Rank.SIX).get();
-
-    public static final JsonElement JSON_WITH_KING_AND_SIX = new BetRequestBuilder().get();
-
-    public static final JsonElement JSON_WITH_SIX_AND_FOUR = new JsonParser().parse("{\n" +
+    private String jsonStringWithWildcards = "{\n" +
             "    \"small_blind\": 10,                              \n" +
             "    \"current_buy_in\": 320,                          \n" +
             "    \"pot\": 400,                                     \n" +
@@ -48,7 +45,7 @@ public class EvalCardsTest {
             "                    \"suit\": \"hearts\"                \n" +
             "                },\n" +
             "                {\n" +
-            "                    \"rank\": \"4\",\n" +
+            "                    \"rank\": \"K\",\n" +
             "                    \"suit\": \"spades\"\n" +
             "                }\n" +
             "            ]\n" +
@@ -62,38 +59,28 @@ public class EvalCardsTest {
             "            \"bet\": 0\n" +
             "        }\n" +
             "    ]\n" +
-            "}");
+            "}";
 
-    @Test
-    public void getCommunityCards() throws Exception {
-        List<Card> communitCards = new EvalCards(jsonWithCommunityCards).getCommunityCards();
-        assertTrue(communitCards.contains(new Card(Rank.FOUR, Suite.SPADES)));
-        assertTrue(communitCards.contains(new Card(Rank.ACE, Suite.HEARTS)));
-        assertTrue(communitCards.contains(new Card(Rank.SIX, Suite.CLUBS)));
+    List<JsonObject> communityCards = new ArrayList<>();
+
+    public JsonElement get() {
+        JsonElement parse = new JsonParser().parse(jsonStringWithWildcards);
+        JsonObject object = parse.getAsJsonObject();
+        if(!communityCards.isEmpty()) {
+            JsonArray array = new JsonArray();
+            for (JsonObject communityCard : communityCards) {
+                array.add(communityCard);
+            }
+            object.add("community_cards", array);
+        }
+        return object;
     }
 
-    @Test
-    public void getMyCards() throws Exception {
-        List<Card> communitCards = new EvalCards(jsonWithCommunityCards).getMyCards();
-        assertTrue(communitCards.contains(new Card(Rank.KING, Suite.SPADES)));
-        assertTrue(communitCards.contains(new Card(Rank.SIX, Suite.HEARTS)));
+    public BetRequestBuilder createCommunityCard(Suite suite, Rank rank) {
+        JsonObject object = new JsonObject();
+        object.addProperty("suit", suite.getStringRepresentation());
+        object.addProperty("rank", rank.getStringRepresentation());
+        communityCards.add(object);
+        return this;
     }
-
-    @Test
-    public void getAllCards() throws Exception {
-        List<Card> communitCards = new EvalCards(jsonWithCommunityCards).getAllCards();
-        assertTrue(communitCards.contains(new Card(Rank.FOUR, Suite.SPADES)));
-        assertTrue(communitCards.contains(new Card(Rank.ACE, Suite.HEARTS)));
-        assertTrue(communitCards.contains(new Card(Rank.SIX, Suite.CLUBS)));
-        assertTrue(communitCards.contains(new Card(Rank.KING, Suite.SPADES)));
-        assertTrue(communitCards.contains(new Card(Rank.SIX, Suite.HEARTS)));
-    }
-
-    @Test
-    public void getAllCardsWithoutCommunityCards() throws Exception {
-        List<Card> communitCards = new EvalCards(JSON_WITH_KING_AND_SIX).getAllCards();
-        assertTrue(communitCards.contains(new Card(Rank.KING, Suite.SPADES)));
-        assertTrue(communitCards.contains(new Card(Rank.SIX, Suite.HEARTS)));
-    }
-
 }
