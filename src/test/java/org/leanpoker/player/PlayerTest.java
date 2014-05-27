@@ -22,6 +22,5 @@ public class PlayerTest {
         JsonElement jsonElement = new JsonParser().parse("{\"minimum_raise\": \"220\", \"key2\": \"value2\"}");
 
         assertEquals(220, Player.getMinRaise(jsonElement.getAsJsonObject()));
-
     }
 }
