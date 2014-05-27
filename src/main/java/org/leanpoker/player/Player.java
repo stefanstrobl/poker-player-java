@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Player {
 
-    static final String VERSION = "4";
+    static final String VERSION = "5";
 
     public static int betRequest(JsonElement request) {
         try {
@@ -34,6 +34,9 @@ public class Player {
                 return new CallingStrategy().doCall(request.getAsJsonObject());
             }
 
+            if(!preFlop && SingleCardEvaluator.isHighCard(myCards, communityCards)) {
+                return new CallingStrategy().doCall(request.getAsJsonObject());
+            }
 
             // else fold
             return new AlwaysCheckBlindsStrategy().alwaysCheckBlinds(request);

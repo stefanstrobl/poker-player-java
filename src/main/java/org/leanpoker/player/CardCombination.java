@@ -12,13 +12,15 @@ import java.util.Map;
  */
 public class CardCombination {
 
+    public static final Comparator<Card> RANKINGCOMPARATOR = new Comparator<Card>() {
+        @Override
+        public int compare(Card o1, Card o2) {
+            return o1.getRank().compareTo(o2.getRank());
+        }
+    };
+
     public static boolean hasPair(List<Card> cards) {
-        Collections.sort(cards, new Comparator<Card>() {
-            @Override
-            public int compare(Card o1, Card o2) {
-                return o1.getRank().compareTo(o2.getRank());
-            }
-        });
+        Collections.sort(cards, RANKINGCOMPARATOR);
 
         Rank previous = cards.get(0).getRank();
         for (int i = 1; i < cards.size(); i++) {
