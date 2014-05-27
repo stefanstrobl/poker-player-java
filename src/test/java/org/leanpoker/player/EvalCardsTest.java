@@ -118,34 +118,34 @@ public class EvalCardsTest {
 
     @Test
     public void getCommunityCards() throws Exception {
-        List<Rank> communitCards = new EvalCards(jsonWithCommunityCards).getCommunityCards();
-        assertTrue(communitCards.contains(Rank.FOUR));
-        assertTrue(communitCards.contains(Rank.ACE));
-        assertTrue(communitCards.contains(Rank.SIX));
+        List<Card> communitCards = new EvalCards(jsonWithCommunityCards).getCommunityCards();
+        assertTrue(communitCards.contains(new Card(Rank.FOUR, null)));
+        assertTrue(communitCards.contains(new Card(Rank.ACE, null)));
+        assertTrue(communitCards.contains(new Card(Rank.SIX, null)));
     }
 
     @Test
     public void getMyCards() throws Exception {
-        List<Rank> communitCards = new EvalCards(jsonWithCommunityCards).getMyCards();
-        assertTrue(communitCards.contains(Rank.KING));
-        assertTrue(communitCards.contains(Rank.SIX));
+        List<Card> communitCards = new EvalCards(jsonWithCommunityCards).getMyCards();
+        assertTrue(communitCards.contains(new Card(Rank.KING, null)));
+        assertTrue(communitCards.contains(new Card(Rank.SIX, null)));
     }
 
     @Test
     public void getAllCards() throws Exception {
-        List<Rank> communitCards = new EvalCards(jsonWithCommunityCards).getAllCards();
-        assertTrue(communitCards.contains(Rank.FOUR));
-        assertTrue(communitCards.contains(Rank.ACE));
-        assertTrue(communitCards.contains(Rank.SIX));
-        assertTrue(communitCards.contains(Rank.KING));
-        assertTrue(communitCards.contains(Rank.SIX));
+        List<Card> communitCards = new EvalCards(jsonWithCommunityCards).getAllCards();
+        assertTrue(communitCards.contains(new Card(Rank.FOUR, null)));
+        assertTrue(communitCards.contains(new Card(Rank.ACE, null)));
+        assertTrue(communitCards.contains(new Card(Rank.SIX, null)));
+        assertTrue(communitCards.contains(new Card(Rank.KING, null)));
+        assertTrue(communitCards.contains(new Card(Rank.SIX, null)));
     }
 
     @Test
     public void getAllCardsWithoutCommunityCards() throws Exception {
-        List<Rank> communitCards = new EvalCards(jsonWithoutCommunityCards).getAllCards();
-        assertTrue(communitCards.contains(Rank.KING));
-        assertTrue(communitCards.contains(Rank.SIX));
+        List<Card> communitCards = new EvalCards(jsonWithoutCommunityCards).getAllCards();
+        assertTrue(communitCards.contains(new Card(Rank.KING, null)));
+        assertTrue(communitCards.contains(new Card(Rank.SIX, null)));
     }
 
     // community cards leer
