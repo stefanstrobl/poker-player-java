@@ -28,8 +28,16 @@ public class PlayerTest {
     }
 
     @Test
-    public void noFoldWithKing() throws Exception {
-        assertEquals(Integer.MAX_VALUE, Player.betRequest(EvalCardsTest.JSON_WITH_KING_AND_SIX.getAsJsonObject()));
+    public void callWithKing() throws Exception {
+        assertEquals(240, Player.betRequest(EvalCardsTest.JSON_WITH_KING_AND_SIX.getAsJsonObject()));
+    }
+
+    @Test
+    public void callWithAceHighcardOnPreFlush() throws Exception {
+        assertEquals(40, Player.betRequest(new BetRequestBuilder()
+                .addHoleCard(Suite.HEARTS, Rank.ACE).addHoleCard(Suite.DIAMONDS, Rank.SIX)
+                .currentBuyIn(60).ourBet(20)
+                .get()));
     }
 
     @Test

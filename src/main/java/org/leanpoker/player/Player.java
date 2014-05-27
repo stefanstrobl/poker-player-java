@@ -31,7 +31,7 @@ public class Player {
                 return Integer.MAX_VALUE;
             }
             if (preFlop && SingleCardEvaluator.hasKingOrAce(allCards)) {
-                return Integer.MAX_VALUE;
+                return new CallingStrategy().doCall(request.getAsJsonObject());
             }
 
 
