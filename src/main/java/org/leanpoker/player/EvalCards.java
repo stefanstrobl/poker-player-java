@@ -15,9 +15,12 @@ public class EvalCards {
     }
 
     public List<Rank> getCommunityCards() {
-        JsonArray community_cards = json.getAsJsonObject().getAsJsonArray("community_cards");
-        List<Rank> suits = getCards(community_cards);
-        return suits;
+        if (json.getAsJsonObject().has("community_cards")) {
+
+            JsonArray community_cards = json.getAsJsonObject().getAsJsonArray("community_cards");
+            return getCards(community_cards);
+        }
+        return new ArrayList<>();
     }
 
     private List<Rank> getCards(JsonArray community_cards) {
