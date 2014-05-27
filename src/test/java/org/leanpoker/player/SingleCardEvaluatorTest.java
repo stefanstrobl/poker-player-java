@@ -12,20 +12,20 @@ public class SingleCardEvaluatorTest {
     public void hasKing() throws Exception {
         ArrayList<Card> cards = new ArrayList<>();
         cards.add(new Card(Rank.KING, null));
-        assertTrue(SingleCardEvaluator.hasKingOrAce(cards));
+        assertTrue(SingleCardEvaluator.hasCardHigherThanNine(cards));
     }
 
     @Test
     public void hasAce() throws Exception {
         ArrayList<Card> cards = new ArrayList<>();
         cards.add(new Card(Rank.ACE, null));
-        assertTrue(SingleCardEvaluator.hasKingOrAce(cards));
+        assertTrue(SingleCardEvaluator.hasCardHigherThanNine(cards));
     }
 
     @Test
     public void noKingOrAce() throws Exception {
         ArrayList<Card> cards = new ArrayList<>();
-        cards.add(new Card(Rank.SIX, null));
-        assertFalse(SingleCardEvaluator.hasKingOrAce(cards));
+        cards.add(new Card(Rank.NINE, null));
+        assertFalse(SingleCardEvaluator.hasCardHigherThanNine(cards));
     }
 }

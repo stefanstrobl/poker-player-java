@@ -30,7 +30,7 @@ public class Player {
             if (preFlop && CardCombination.hasPair(myCards, communityCards)) {
                 return Integer.MAX_VALUE;
             }
-            if (preFlop && SingleCardEvaluator.hasKingOrAce(allCards)) {
+            if (preFlop && SingleCardEvaluator.hasCardHigherThanNine(allCards)) {
                 return new CallingStrategy().doCall(request.getAsJsonObject());
             }
 
