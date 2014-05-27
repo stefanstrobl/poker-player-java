@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 
 public class GameStateResolver {
     public static boolean isPreFlop(JsonElement withoutCommunityCards) {
-        return !withoutCommunityCards.getAsJsonObject().has("community_cards");
+        JsonElement communityCards = withoutCommunityCards.getAsJsonObject().get("community_cards");
+        return communityCards == null || communityCards.getAsJsonArray().size() == 0;
     }
 }

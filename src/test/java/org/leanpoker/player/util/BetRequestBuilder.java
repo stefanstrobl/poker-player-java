@@ -58,7 +58,7 @@ public class BetRequestBuilder {
     private int smallBlind = 10;
     private int currentBuyIn = 320;
 
-    public JsonElement get() {
+    public JsonObject get() {
         String formattedJson = String.format(jsonStringWithWildcards, smallBlind, currentBuyIn);
         JsonElement parse = new JsonParser().parse(formattedJson);
         if (holeCards.size() != 2) {
