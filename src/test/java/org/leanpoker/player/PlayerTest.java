@@ -41,6 +41,17 @@ public class PlayerTest {
     }
 
     @Test
+    public void callWithAceHighcardPostFlush() throws Exception {
+        assertEquals(40, Player.betRequest(new BetRequestBuilder()
+                .addHoleCard(Suite.HEARTS, Rank.ACE).addHoleCard(Suite.DIAMONDS, Rank.SIX)
+                .createCommunityCard(Suite.HEARTS, Rank.FIVE)
+                .createCommunityCard(Suite.SPADES, Rank.QUEEN)
+                .createCommunityCard(Suite.CLUBS, Rank.TEN)
+                .currentBuyIn(60).ourBet(20)
+                .get()));
+    }
+
+    @Test
     public void hasFlush() {
         BetRequestBuilder betRequestBuilder = new BetRequestBuilder()
                 .addHoleCard(Suite.DIAMONDS, Rank.SIX)

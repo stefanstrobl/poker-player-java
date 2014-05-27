@@ -34,6 +34,9 @@ public class Player {
                 return new CallingStrategy().doCall(request.getAsJsonObject());
             }
 
+            if(!preFlop && SingleCardEvaluator.isHighCard(myCards, communityCards)) {
+                return new CallingStrategy().doCall(request.getAsJsonObject());
+            }
 
             // else fold
             return new AlwaysCheckBlindsStrategy().alwaysCheckBlinds(request);
