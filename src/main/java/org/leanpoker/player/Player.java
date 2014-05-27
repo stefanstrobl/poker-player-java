@@ -24,6 +24,9 @@ public class Player {
             if (FlushEvaluator.hasFlush(allCards)) {
                 return Integer.MAX_VALUE;
             }
+            if (new StraightEvaluator().evaluate(allCards)) {
+                return Integer.MAX_VALUE;
+            }
             if (!preFlop && CardCombination.hasPairHigherThanLimit(myCards, communityCards)) {
                 return Integer.MAX_VALUE;
             }

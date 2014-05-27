@@ -63,6 +63,17 @@ public class PlayerTest {
     }
 
     @Test
+    public void hasStraight() {
+        BetRequestBuilder betRequestBuilder = new BetRequestBuilder()
+                .addHoleCard(Suite.DIAMONDS, Rank.SIX)
+                .addHoleCard(Suite.DIAMONDS, Rank.SEVEN)
+                .createCommunityCard(Suite.SPADES, Rank.EIGHT)
+                .createCommunityCard(Suite.DIAMONDS, Rank.NINE)
+                .createCommunityCard(Suite.DIAMONDS, Rank.TEN);
+        assertEquals(Integer.MAX_VALUE, Player.betRequest(betRequestBuilder.get()));
+    }
+
+    @Test
     public void hasTripple() {
         BetRequestBuilder betRequestBuilder = new BetRequestBuilder()
                 .addHoleCard(Suite.DIAMONDS, Rank.SIX)
