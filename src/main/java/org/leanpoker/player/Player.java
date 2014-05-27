@@ -28,7 +28,7 @@ public class Player {
             }
 
             // else fold
-            return 20;
+            return new AlwaysCheckBlindsStrategy().alwaysCheckBlinds(request);
 
         } catch (Exception e) {
             e.printStackTrace();

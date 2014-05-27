@@ -1,5 +1,6 @@
 package org.leanpoker.player;
 
+import com.google.gson.JsonElement;
 import org.junit.Test;
 import org.leanpoker.player.util.BetRequestBuilder;
 
@@ -14,7 +15,21 @@ public class PlayerTest {
 
     @Test
     public void noPairFold() throws Exception {
-        assertEquals(20, Player.betRequest(EvalCardsTest.JSON_WITH_SIX_AND_FOUR.getAsJsonObject()));
+        assertEquals(0, Player.betRequest(EvalCardsTest.JSON_WITH_SIX_AND_FOUR));
+    }
+
+    @Test
+    public void checkOnBigBlindOnly() throws Exception {
+        JsonElement request = new BetRequestBuilder().smallBlind(10).currentBuyIn(20)
+                .addHoleCard(Suite.HEARTS, Rank.SIX).addHoleCard(Suite.SPADES, Rank.FIVE).get();
+        assertEquals(20, Player.betRequest(request));
+    }
+
+    @Test
+    public void doNotCheckOverBigBlindOnly() throws Exception {
+        JsonElement request = new BetRequestBuilder().smallBlind(10).currentBuyIn(40)
+                .addHoleCard(Suite.HEARTS, Rank.SIX).addHoleCard(Suite.SPADES, Rank.FIVE).get();
+        assertEquals(0, Player.betRequest(request));
     }
 
     @Test
