@@ -40,14 +40,6 @@ public class BetRequestBuilder {
             "            \"stack\": 1590,\n" +
             "            \"bet\": 80,\n" +
             "            \"hole_cards\": [                         \n" +
-            "                {\n" +
-            "                    \"rank\": \"6\",                    \n" +
-            "                    \"suit\": \"hearts\"                \n" +
-            "                },\n" +
-            "                {\n" +
-            "                    \"rank\": \"K\",\n" +
-            "                    \"suit\": \"spades\"\n" +
-            "                }\n" +
             "            ]\n" +
             "        },\n" +
             "        {\n" +
@@ -62,10 +54,21 @@ public class BetRequestBuilder {
             "}";
 
     List<JsonObject> communityCards = new ArrayList<>();
+    private List<JsonObject> holeCards = new ArrayList<>();
 
     public JsonElement get() {
         JsonElement parse = new JsonParser().parse(jsonStringWithWildcards);
+        if(holeCards.size() != 2) {
+            addHoleCard(Suite.HEARTS, Rank.SIX);
+            addHoleCard(Suite.SPADES, Rank.KING);
+        }
         JsonObject object = parse.getAsJsonObject();
+
+        JsonObject player = object.get("players").getAsJsonArray().get(1).getAsJsonObject();
+        JsonArray hole_cards = player.get("hole_cards").getAsJsonArray();
+        hole_cards.add(holeCards.get(0));
+        hole_cards.add(holeCards.get(1));
+
         if(!communityCards.isEmpty()) {
             JsonArray array = new JsonArray();
             for (JsonObject communityCard : communityCards) {
@@ -77,10 +80,21 @@ public class BetRequestBuilder {
     }
 
     public BetRequestBuilder createCommunityCard(Suite suite, Rank rank) {
+        JsonObject object = createCard(suite, rank);
+        communityCards.add(object);
+        return this;
+    }
+
+    public BetRequestBuilder addHoleCard(Suite suite, Rank rank) {
+        JsonObject object = createCard(suite, rank);
+        holeCards.add(object);
+        return this;
+    }
+
+    private JsonObject createCard(Suite suite, Rank rank) {
         JsonObject object = new JsonObject();
         object.addProperty("suit", suite.getStringRepresentation());
         object.addProperty("rank", rank.getStringRepresentation());
-        communityCards.add(object);
-        return this;
+        return object;
     }
 }
