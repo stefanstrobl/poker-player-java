@@ -21,6 +21,9 @@ public class Player {
             if (CardCombination.hasPair(allCards)) {
                 return Integer.MAX_VALUE;
             }
+            if (SingleCardEvaluator.hasKingOrAce(allCards)) {
+                return Integer.MAX_VALUE;
+            }
 
             // else fold
             return 0;
