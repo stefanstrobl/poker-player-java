@@ -10,7 +10,7 @@ public class Player {
 
     public static int betRequest(JsonElement request) {
         try {
-
+            System.out.println(request.getAsJsonObject().toString());
             EvalCards evalCards = new EvalCards(request);
 
             List<Card> allCards = evalCards.getAllCards();
