@@ -24,6 +24,18 @@ public class AlwaysCheckBlindsStrategyTest {
     }
 
     @Test
+    public void testStrategyAppliesWithSmallblind() throws Exception {
+        int bet = new AlwaysCheckBlindsStrategy().alwaysCheckBlinds(new BetRequestBuilder().smallBlind(10).currentBuyIn(20).dealer(0).get().getAsJsonObject());
+        assertEquals(10, bet);
+    }
+
+    @Test
+    public void testStrategyAppliesWithBigblind() throws Exception {
+        int bet = new AlwaysCheckBlindsStrategy().alwaysCheckBlinds(new BetRequestBuilder().smallBlind(10).currentBuyIn(20).dealer(2).get().getAsJsonObject());
+        assertEquals(20, bet);
+    }
+
+    @Test
     public void testStrategyAppliesSmallBlind() throws Exception {
         int bet = new AlwaysCheckBlindsStrategy().alwaysCheckBlinds(new BetRequestBuilder().smallBlind(20).currentBuyIn(20).get().getAsJsonObject());
         assertEquals(40, bet);

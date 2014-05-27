@@ -20,7 +20,7 @@ public class BetRequestBuilder {
             "    \"current_buy_in\": %d,                          \n" +
             "    \"pot\": 400,                                     \n" +
             "    \"minimum_raise\": 240,                           \n" +
-            "    \"dealer\": 1,                                    \n" +
+            "    \"dealer\": %d,                                    \n" +
             "    \"orbits\": 7,                                    \n" +
             "    \"in_action\": 1,                                 \n" +
             "    \"players\": [                                    \n" +
@@ -57,9 +57,10 @@ public class BetRequestBuilder {
     private List<JsonObject> holeCards = new ArrayList<>();
     private int smallBlind = 10;
     private int currentBuyIn = 320;
+    private int dealer = 1;
 
-    public JsonElement get() {
-        String formattedJson = String.format(jsonStringWithWildcards, smallBlind, currentBuyIn);
+    public JsonObject get() {
+        String formattedJson = String.format(jsonStringWithWildcards, smallBlind, currentBuyIn, dealer);
         JsonElement parse = new JsonParser().parse(formattedJson);
         if (holeCards.size() != 2) {
             addHoleCard(Suite.HEARTS, Rank.SIX);
@@ -89,6 +90,11 @@ public class BetRequestBuilder {
 
     public BetRequestBuilder currentBuyIn(int currentBuyIn) {
         this.currentBuyIn = currentBuyIn;
+        return this;
+    }
+
+    public BetRequestBuilder dealer(int dealer) {
+        this.dealer = dealer;
         return this;
     }
 
