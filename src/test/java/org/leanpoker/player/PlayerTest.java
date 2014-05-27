@@ -29,7 +29,7 @@ public class PlayerTest {
 
     @Test
     public void callWithKing() throws Exception {
-        assertEquals(240, Player.betRequest(EvalCardsTest.JSON_WITH_KING_AND_SIX.getAsJsonObject()));
+        assertEquals(20, Player.betRequest(new BetRequestBuilder().currentBuyIn(40).ourBet(20).get()));
     }
 
     @Test

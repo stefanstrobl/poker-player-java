@@ -31,11 +31,11 @@ public class Player {
                 return Integer.MAX_VALUE;
             }
             if (preFlop && SingleCardEvaluator.hasCardHigherThanNine(allCards)) {
-                return new CallingStrategy().doCall(request.getAsJsonObject());
+                return new LimitedCallingStrategy().doCall(request.getAsJsonObject());
             }
 
             if(!preFlop && SingleCardEvaluator.isHighCard(myCards, communityCards)) {
-                return new CallingStrategy().doCall(request.getAsJsonObject());
+                return new LimitedCallingStrategy().doCall(request.getAsJsonObject());
             }
 
             // else fold
