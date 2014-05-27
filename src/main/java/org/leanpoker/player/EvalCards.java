@@ -2,6 +2,7 @@ package org.leanpoker.player;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +14,32 @@ public class EvalCards {
         this.json = json;
     }
 
-    public List<String> getCommunityCards() {
-        ArrayList<String> suits = new ArrayList<String>();
+    public List<Rank> getCommunityCards() {
         JsonArray community_cards = json.getAsJsonObject().getAsJsonArray("community_cards");
+        List<Rank> suits = getCards(community_cards);
+        return suits;
+    }
+
+    private List<Rank> getCards(JsonArray community_cards) {
+        List<Rank> suits = new ArrayList<Rank>();
         for (JsonElement community_card : community_cards) {
-            String suit = community_card.getAsJsonObject().get("suit").getAsString();
-            suits.add(suit);
+            String suit = community_card.getAsJsonObject().get("rank").getAsString();
+            suits.add(Rank.fromString(suit));
         }
         return suits;
+    }
+
+    public List<Rank> getMyCards() {
+        JsonObject asJsonObject = json.getAsJsonObject();
+        int positionOfPlayer = asJsonObject.get("in_action").getAsInt();
+        JsonArray players = asJsonObject.getAsJsonArray("players");
+        JsonObject jsonPlayer = players.get(positionOfPlayer).getAsJsonObject();
+        return getCards(jsonPlayer.getAsJsonArray("hole_cards"));
+    }
+
+    public List<Rank> getAllCards() {
+        List<Rank> cards = getMyCards();
+        cards.addAll(getCommunityCards());
+        return cards;
     }
 }

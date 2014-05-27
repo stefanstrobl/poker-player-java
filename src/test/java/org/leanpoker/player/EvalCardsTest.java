@@ -71,10 +71,29 @@ public class EvalCardsTest {
             "}");
 
     @Test
-    public void getMyCards() throws Exception {
-        List<String> communitCards = new EvalCards(json).getCommunityCards();
-        assertTrue(communitCards.contains("spades"));
-        assertTrue(communitCards.contains("hearts"));
-        assertTrue(communitCards.contains("clubs"));
+    public void getCommunityCards() throws Exception {
+        List<Rank> communitCards = new EvalCards(json).getCommunityCards();
+        assertTrue(communitCards.contains(Rank.FOUR));
+        assertTrue(communitCards.contains(Rank.ACE));
+        assertTrue(communitCards.contains(Rank.SIX));
     }
+
+    @Test
+    public void getMyCards() throws Exception {
+        List<Rank> communitCards = new EvalCards(json).getMyCards();
+        assertTrue(communitCards.contains(Rank.KING));
+        assertTrue(communitCards.contains(Rank.SIX));
+    }
+
+    @Test
+    public void getAllCards() throws Exception {
+        List<Rank> communitCards = new EvalCards(json).getAllCards();
+        assertTrue(communitCards.contains(Rank.FOUR));
+        assertTrue(communitCards.contains(Rank.ACE));
+        assertTrue(communitCards.contains(Rank.SIX));
+        assertTrue(communitCards.contains(Rank.KING));
+        assertTrue(communitCards.contains(Rank.SIX));
+    }
+
+    // community cards leer
 }
