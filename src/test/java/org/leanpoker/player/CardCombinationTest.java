@@ -75,11 +75,12 @@ public class CardCombinationTest {
 
     @Test
     public void testHasPair() throws Exception {
-        List<Rank> ranks = Arrays.asList(Rank.EIGHT, Rank.FIVE, Rank.EIGHT, Rank.KING, Rank.ACE);
-
-        Collections.sort(ranks);
-
+        List<Card> ranks = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.FIVE), asCard(Rank.EIGHT), asCard(Rank.KING), asCard(Rank.ACE));
         assertTrue(CardCombination.hasPair(ranks));
+    }
+
+    private Card asCard(Rank rank) {
+        return new Card(rank, null);
     }
 
 }

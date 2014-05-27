@@ -3,6 +3,8 @@ package org.leanpoker.player;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.List;
+
 public class Player {
 
     static final String VERSION = "Default Java folding player";
@@ -14,14 +16,20 @@ public class Player {
             int minRaise = getMinRaise(jsonObject);
             System.out.println(minRaise);
 
-            return 100000;
+            // if hasPair -> all In
+            List<Card> allCards = new EvalCards(request).getAllCards();
+            if (CardCombination.hasPair(allCards)) {
+                return Integer.MAX_VALUE;
+            }
+
+            // else fold
+            return 0;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        return 0;
+        return Integer.MAX_VALUE;
     }
 
     public static int getMinRaise(JsonObject jsonObject) {
