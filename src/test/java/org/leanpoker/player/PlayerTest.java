@@ -73,9 +73,9 @@ public class PlayerTest {
     @Test
     public void hasLowPairPostFlop() {
         BetRequestBuilder betRequestBuilder = new BetRequestBuilder()
-                .addHoleCard(Suite.DIAMONDS, Rank.SIX)
+                .addHoleCard(Suite.DIAMONDS, Rank.FIVE)
                 .addHoleCard(Suite.CLUBS, Rank.EIGHT)
-                .createCommunityCard(Suite.DIAMONDS, Rank.EIGHT)
+                .createCommunityCard(Suite.DIAMONDS, Rank.FIVE)
                 .createCommunityCard(Suite.DIAMONDS, Rank.NINE)
                 .createCommunityCard(Suite.DIAMONDS, Rank.TEN);
         assertEquals(0, Player.betRequest(betRequestBuilder.get()));

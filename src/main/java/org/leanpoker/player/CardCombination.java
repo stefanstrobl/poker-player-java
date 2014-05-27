@@ -69,7 +69,7 @@ public class CardCombination {
         Map<Rank, Integer> communityRanks = groupRanks(community);
         Map<Rank, Integer> ownRanks  = groupRanks(own);
 
-        EnumSet<Rank> limit = EnumSet.of(Rank.ACE, Rank.KING, Rank.QUEEN, Rank.KNAVE, Rank.TEN);
+        EnumSet<Rank> limit = EnumSet.of(Rank.ACE, Rank.KING, Rank.QUEEN, Rank.KNAVE, Rank.TEN, Rank.NINE, Rank.EIGHT, Rank.SEVEN, Rank.SIX);
 
         for (Map.Entry<Rank, Integer> ownRank : ownRanks.entrySet()) {
             Rank rank = ownRank.getKey();

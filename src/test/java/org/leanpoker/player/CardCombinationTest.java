@@ -123,8 +123,8 @@ public class CardCombinationTest {
 
     @Test
     public void testHasPairLowerThanLimit() {
-        List<Card> own = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.NINE));
-        List<Card> community = Arrays.asList(asCard(Rank.EIGHT));
+        List<Card> own = Arrays.asList(asCard(Rank.FIVE), asCard(Rank.NINE));
+        List<Card> community = Arrays.asList(asCard(Rank.FIVE));
         assertFalse(CardCombination.hasPairHigherThanLimit(own, community));
     }
 
@@ -132,6 +132,13 @@ public class CardCombinationTest {
     public void testHasPairHigherThanLimit() {
         List<Card> own = Arrays.asList(asCard(Rank.TEN));
         List<Card> community = Arrays.asList(asCard(Rank.TEN), asCard(Rank.NINE));
+        assertTrue(CardCombination.hasPairHigherThanLimit(own, community));
+    }
+
+    @Test
+    public void testHasPairHigherOnePlusLimit() {
+        List<Card> own = Arrays.asList(asCard(Rank.SIX));
+        List<Card> community = Arrays.asList(asCard(Rank.SIX), asCard(Rank.NINE));
         assertTrue(CardCombination.hasPairHigherThanLimit(own, community));
     }
 
