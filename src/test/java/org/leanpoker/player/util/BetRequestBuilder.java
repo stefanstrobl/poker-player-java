@@ -16,8 +16,8 @@ import java.util.List;
 public class BetRequestBuilder {
 
     private String jsonStringWithWildcards = "{\n" +
-            "    \"small_blind\": 10,                              \n" +
-            "    \"current_buy_in\": 320,                          \n" +
+            "    \"small_blind\": %d,                              \n" +
+            "    \"current_buy_in\": %d,                          \n" +
             "    \"pot\": 400,                                     \n" +
             "    \"minimum_raise\": 240,                           \n" +
             "    \"dealer\": 1,                                    \n" +
@@ -55,10 +55,13 @@ public class BetRequestBuilder {
 
     List<JsonObject> communityCards = new ArrayList<>();
     private List<JsonObject> holeCards = new ArrayList<>();
+    private int smallBlind = 10;
+    private int currentBuyIn = 320;
 
     public JsonElement get() {
-        JsonElement parse = new JsonParser().parse(jsonStringWithWildcards);
-        if(holeCards.size() != 2) {
+        String formattedJson = String.format(jsonStringWithWildcards, smallBlind, currentBuyIn);
+        JsonElement parse = new JsonParser().parse(formattedJson);
+        if (holeCards.size() != 2) {
             addHoleCard(Suite.HEARTS, Rank.SIX);
             addHoleCard(Suite.SPADES, Rank.KING);
         }
@@ -69,7 +72,7 @@ public class BetRequestBuilder {
         hole_cards.add(holeCards.get(0));
         hole_cards.add(holeCards.get(1));
 
-        if(!communityCards.isEmpty()) {
+        if (!communityCards.isEmpty()) {
             JsonArray array = new JsonArray();
             for (JsonObject communityCard : communityCards) {
                 array.add(communityCard);
@@ -77,6 +80,16 @@ public class BetRequestBuilder {
             object.add("community_cards", array);
         }
         return object;
+    }
+
+    public BetRequestBuilder smallBlind(int smallBlind) {
+        this.smallBlind = smallBlind;
+        return this;
+    }
+
+    public BetRequestBuilder currentBuyIn(int currentBuyIn) {
+        this.currentBuyIn = currentBuyIn;
+        return this;
     }
 
     public BetRequestBuilder createCommunityCard(Suite suite, Rank rank) {
