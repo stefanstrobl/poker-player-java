@@ -14,6 +14,13 @@ public class AlwaysCheckBlindsStrategy {
         int currentBuyIn = json.get("current_buy_in").getAsInt();
         int bigBlind = smallBlind * 2;
 
-        return bigBlind >= currentBuyIn ? bigBlind : 0;
+        // if we have bet the small blind, bet another blind if the currentBuyIn is not bigger as the big blind
+        int dealerIndex = json.get("dealer").getAsInt();
+        int ourIndex = json.get("in_action").getAsInt();
+        boolean weHaveSmallBlind = dealerIndex + 1 == ourIndex;
+        int toBet = weHaveSmallBlind ? smallBlind : bigBlind;
+
+        // if the currentByIn is smaller als the big blind, bet the big blind (e.g. check a blind)
+        return bigBlind >= currentBuyIn ? toBet : 0;
     }
 }
