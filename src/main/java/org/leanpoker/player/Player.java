@@ -26,7 +26,7 @@ public class Player {
             }
 
             // else fold
-            return 0;
+            return 20;
 
         } catch (Exception e) {
             e.printStackTrace();
