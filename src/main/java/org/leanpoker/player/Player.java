@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Player {
 
-    static final String VERSION = "5";
+    static final String VERSION = "6";
 
     public static int betRequest(JsonElement request) {
         try {
