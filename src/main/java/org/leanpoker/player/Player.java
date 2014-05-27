@@ -17,15 +17,23 @@ public class Player {
             List<Card> myCards = evalCards.getMyCards();
             List<Card> communityCards = evalCards.getCommunityCards();
 
-            if (CardCombination.hasPair(myCards, communityCards)) {
-                return Integer.MAX_VALUE;
-            }
-            if (GameStateResolver.isPreFlop(request) && SingleCardEvaluator.hasKingOrAce(allCards)) {
+            boolean preFlop = GameStateResolver.isPreFlop(request);
+            if (CardCombination.hasTrippleOrPoker(myCards, communityCards)) {
                 return Integer.MAX_VALUE;
             }
             if (FlushEvaluator.hasFlush(allCards)) {
                 return Integer.MAX_VALUE;
             }
+            if (!preFlop && CardCombination.hasPairHigherThanLimit(myCards, communityCards)) {
+                return Integer.MAX_VALUE;
+            }
+            if (preFlop && CardCombination.hasPair(myCards, communityCards)) {
+                return Integer.MAX_VALUE;
+            }
+            if (preFlop && SingleCardEvaluator.hasKingOrAce(allCards)) {
+                return Integer.MAX_VALUE;
+            }
+
 
             // else fold
             return new AlwaysCheckBlindsStrategy().alwaysCheckBlinds(request);

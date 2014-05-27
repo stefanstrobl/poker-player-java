@@ -2,6 +2,7 @@ package org.leanpoker.player;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,44 @@ public class CardCombination {
         return hasPair(own);
     }
 
-    public static boolean hasTripple(List<Card> allCards) {
+    public static boolean hasTrippleOrPoker(List<Card> own, List<Card> community) {
+        HashMap<Rank, Integer> communityRankCount = groupRanks(community);
+        HashMap<Rank, Integer> ownRankCount = groupRanks(own);
+        for (Map.Entry<Rank, Integer> ownRank : ownRankCount.entrySet()) {
+            Rank rank = ownRank.getKey();
+
+            Integer count = communityRankCount.get(rank);
+
+            if (count != null && count + ownRank.getValue() >= 3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasPairHigherThanLimit(List<Card> own, List<Card> community) {
+        Map<Rank, Integer> communityRanks = groupRanks(community);
+        Map<Rank, Integer> ownRanks  = groupRanks(own);
+
+        EnumSet<Rank> limit = EnumSet.of(Rank.ACE, Rank.KING, Rank.QUEEN, Rank.KNAVE, Rank.TEN);
+
+        for (Map.Entry<Rank, Integer> ownRank : ownRanks.entrySet()) {
+            Rank rank = ownRank.getKey();
+            Integer ownCount = ownRank.getValue();
+            Integer communityCount = 0;
+            if (communityRanks.containsKey(rank)) {
+                communityCount = communityRanks.get(rank);
+            }
+
+            if (limit.contains(rank) && communityCount + ownCount == 2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static HashMap<Rank, Integer> groupRanks(List<Card> allCards) {
         HashMap<Rank, Integer> rankCount = new HashMap<>();
         for (Card card : allCards) {
             Integer count = 0;
@@ -59,11 +97,6 @@ public class CardCombination {
             }
             rankCount.put(rank, count + 1);
         }
-        for (Map.Entry<Rank, Integer> entry : rankCount.entrySet()) {
-            if (entry.getValue() == 3) {
-                return true;
-            }
-        }
-        return false;
+        return rankCount;
     }
 }

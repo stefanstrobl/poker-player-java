@@ -109,14 +109,37 @@ public class CardCombinationTest {
 
     @Test
     public void testHasTripple() {
-        List<Card> allCards = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.EIGHT), asCard(Rank.EIGHT));
-        assertTrue(CardCombination.hasTripple(allCards));
+        List<Card> own = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.EIGHT));
+        List<Card> community = Arrays.asList(asCard(Rank.EIGHT));
+        assertTrue(CardCombination.hasTrippleOrPoker(own, community));
     }
 
     @Test
     public void testHasNoTripple() {
-        List<Card> allCards = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.EIGHT));
-        assertFalse(CardCombination.hasTripple(allCards));
+        List<Card> own = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.EIGHT));
+        List<Card> community = Arrays.asList(asCard(Rank.NINE), asCard(Rank.NINE), asCard(Rank.NINE));
+        assertFalse(CardCombination.hasTrippleOrPoker(own, community));
+    }
+
+    @Test
+    public void testHasPairLowerThanLimit() {
+        List<Card> own = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.NINE));
+        List<Card> community = Arrays.asList(asCard(Rank.EIGHT));
+        assertFalse(CardCombination.hasPairHigherThanLimit(own, community));
+    }
+
+    @Test
+    public void testHasPairHigherThanLimit() {
+        List<Card> own = Arrays.asList(asCard(Rank.TEN));
+        List<Card> community = Arrays.asList(asCard(Rank.TEN), asCard(Rank.NINE));
+        assertTrue(CardCombination.hasPairHigherThanLimit(own, community));
+    }
+
+    @Test
+    public void testHasPairHigherThanLimitOnlyCommunity() {
+        List<Card> own = Arrays.asList(asCard(Rank.TEN));
+        List<Card> community = Arrays.asList(asCard(Rank.ACE), asCard(Rank.ACE));
+        assertFalse(CardCombination.hasPairHigherThanLimit(own, community));
     }
 
     private Card asCard(Rank rank) {
