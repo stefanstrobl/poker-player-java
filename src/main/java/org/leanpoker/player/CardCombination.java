@@ -28,4 +28,18 @@ public class CardCombination {
         return false;
     }
 
+    public static boolean hasPair(List<Card> own, List<Card> community) {
+        if(hasPair(own)) {
+            return true;
+        }
+        for (Card ownCard : own) {
+            for (Card commCard : community) {
+                if(ownCard.getRank().equals(commCard.getRank())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

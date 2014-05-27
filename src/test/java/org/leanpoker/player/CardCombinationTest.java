@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class CardCombinationTest {
@@ -74,9 +75,38 @@ public class CardCombinationTest {
             "}");
 
     @Test
-    public void testHasPair() throws Exception {
+    public void testHasPairFullList() throws Exception {
         List<Card> ranks = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.FIVE), asCard(Rank.EIGHT), asCard(Rank.KING), asCard(Rank.ACE));
         assertTrue(CardCombination.hasPair(ranks));
+    }
+
+    @Test
+    public void testHasPairOwnVsCommunityShared() throws Exception {
+        List<Card> own = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.FIVE));
+        List<Card> community = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.KING), asCard(Rank.ACE));
+        assertTrue(CardCombination.hasPair(own, community));
+    }
+
+    @Test
+    public void testHasPairOwnVsCommunityOwn() throws Exception {
+        List<Card> own = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.EIGHT));
+        List<Card> community = Arrays.asList(asCard(Rank.THREE), asCard(Rank.KING), asCard(Rank.ACE));
+        assertTrue(CardCombination.hasPair(own, community));
+    }
+
+
+    @Test
+    public void testHasPairOwnVsCommunityInCommunity() throws Exception {
+        List<Card> own = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.FIVE));
+        List<Card> community = Arrays.asList(asCard(Rank.THREE), asCard(Rank.THREE), asCard(Rank.ACE));
+        assertFalse(CardCombination.hasPair(own, community));
+    }
+
+    @Test
+    public void testHasPairOwnVsCommunityNoPair() throws Exception {
+        List<Card> own = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.FIVE));
+        List<Card> community = Arrays.asList(asCard(Rank.THREE), asCard(Rank.TWO), asCard(Rank.ACE));
+        assertFalse(CardCombination.hasPair(own, community));
     }
 
     private Card asCard(Rank rank) {

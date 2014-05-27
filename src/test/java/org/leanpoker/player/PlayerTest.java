@@ -21,7 +21,7 @@ public class PlayerTest {
 
     @Test
     public void noPairFold() throws Exception {
-        assertEquals(0, Player.betRequest(EvalCardsTest.JSON_WITH_SIX_AND_FOUR.getAsJsonObject()));
+        assertEquals(20, Player.betRequest(EvalCardsTest.JSON_WITH_SIX_AND_FOUR.getAsJsonObject()));
     }
 
     @Test
