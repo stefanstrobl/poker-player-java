@@ -11,8 +11,8 @@ public class Player {
         try {
 
             JsonObject jsonObject = request.getAsJsonObject();
-            JsonElement minimum_raise = jsonObject.get("minimum_raise");
-            int minRaise = minimum_raise.getAsInt();
+            int minRaise = getMinRaise(jsonObject);
+            System.out.println(minRaise);
 
             return 1000;
 
@@ -22,6 +22,11 @@ public class Player {
 
 
         return 0;
+    }
+
+    public static int getMinRaise(JsonObject jsonObject) {
+        JsonElement minimum_raise = jsonObject.get("minimum_raise");
+        return minimum_raise.getAsInt();
     }
 
     public static void showdown(JsonElement game) {
