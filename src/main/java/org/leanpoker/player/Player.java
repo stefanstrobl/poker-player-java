@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Player {
 
-    static final String VERSION = "2";
+    static final String VERSION = "3";
 
     public static int betRequest(JsonElement request) {
         try {
@@ -21,6 +21,9 @@ public class Player {
                 return Integer.MAX_VALUE;
             }
             if (GameStateResolver.isPreFlop(request) && SingleCardEvaluator.hasKingOrAce(allCards)) {
+                return Integer.MAX_VALUE;
+            }
+            if (FlushEvaluator.hasFlush(allCards)) {
                 return Integer.MAX_VALUE;
             }
 
