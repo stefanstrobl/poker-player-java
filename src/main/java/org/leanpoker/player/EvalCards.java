@@ -26,8 +26,9 @@ public class EvalCards {
     private List<Card> getCards(JsonArray community_cards) {
         List<Card> suits = new ArrayList<Card>();
         for (JsonElement community_card : community_cards) {
-            String suit = community_card.getAsJsonObject().get("rank").getAsString();
-            suits.add(new Card(Rank.fromString(suit), null));
+            String rank = community_card.getAsJsonObject().get("rank").getAsString();
+            String suit = community_card.getAsJsonObject().get("suit").getAsString();
+            suits.add(new Card(Rank.fromString(rank), Suite.fromString(suit)));
         }
         return suits;
     }
