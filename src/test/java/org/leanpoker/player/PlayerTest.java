@@ -47,4 +47,15 @@ public class PlayerTest {
                 .createCommunityCard(Suite.DIAMONDS, Rank.TEN);
         assertEquals(Integer.MAX_VALUE, Player.betRequest(betRequestBuilder.get()));
     }
+
+    @Test
+    public void hasTripple() {
+        BetRequestBuilder betRequestBuilder = new BetRequestBuilder()
+                .addHoleCard(Suite.DIAMONDS, Rank.SIX)
+                .addHoleCard(Suite.CLUBS, Rank.SIX)
+                .createCommunityCard(Suite.DIAMONDS, Rank.SIX)
+                .createCommunityCard(Suite.DIAMONDS, Rank.NINE)
+                .createCommunityCard(Suite.DIAMONDS, Rank.TEN);
+        assertEquals(Integer.MAX_VALUE, Player.betRequest(betRequestBuilder.get()));
+    }
 }

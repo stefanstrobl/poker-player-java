@@ -4,9 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
@@ -107,6 +105,18 @@ public class CardCombinationTest {
         List<Card> own = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.FIVE));
         List<Card> community = Arrays.asList(asCard(Rank.THREE), asCard(Rank.TWO), asCard(Rank.ACE));
         assertFalse(CardCombination.hasPair(own, community));
+    }
+
+    @Test
+    public void testHasTripple() {
+        List<Card> allCards = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.EIGHT), asCard(Rank.EIGHT));
+        assertTrue(CardCombination.hasTripple(allCards));
+    }
+
+    @Test
+    public void testHasNoTripple() {
+        List<Card> allCards = Arrays.asList(asCard(Rank.EIGHT), asCard(Rank.EIGHT));
+        assertFalse(CardCombination.hasTripple(allCards));
     }
 
     private Card asCard(Rank rank) {
