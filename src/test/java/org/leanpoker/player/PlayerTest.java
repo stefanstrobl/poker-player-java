@@ -91,4 +91,12 @@ public class PlayerTest {
                 .createCommunityCard(Suite.DIAMONDS, Rank.TEN);
         assertEquals(Integer.MAX_VALUE, Player.betRequest(betRequestBuilder.get()));
     }
+
+    @Test
+    public void sixJack() {
+        BetRequestBuilder betRequestBuilder = new BetRequestBuilder()
+                .addHoleCard(Suite.HEARTS, Rank.SIX)
+                .addHoleCard(Suite.HEARTS, Rank.KNAVE).currentBuyIn(20).ourBet(10);
+        assertEquals(10, Player.betRequest(betRequestBuilder.get()));
+    }
 }

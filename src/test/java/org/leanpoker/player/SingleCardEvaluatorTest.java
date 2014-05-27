@@ -23,6 +23,13 @@ public class SingleCardEvaluatorTest {
     }
 
     @Test
+    public void hasKnave() throws Exception {
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.add(new Card(Rank.KNAVE, null));
+        assertTrue(SingleCardEvaluator.hasCardHigherThanNine(cards));
+    }
+
+    @Test
     public void noKingOrAce() throws Exception {
         ArrayList<Card> cards = new ArrayList<>();
         cards.add(new Card(Rank.NINE, null));

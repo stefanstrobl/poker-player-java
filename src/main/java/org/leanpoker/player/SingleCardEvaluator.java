@@ -5,9 +5,9 @@ import java.util.List;
 
 public class SingleCardEvaluator {
     public static boolean hasCardHigherThanNine(List<Card> cards) {
-        EnumSet.of(Rank.ACE, Rank.KING, Rank.QUEEN, Rank.KNAVE, Rank.TEN);
+        EnumSet<Rank> limit = EnumSet.of(Rank.ACE, Rank.KING, Rank.QUEEN, Rank.KNAVE, Rank.TEN);
         for (Card card : cards) {
-            if (card.getRank() == Rank.KING || card.getRank() == Rank.ACE) {
+            if (limit.contains(card.getRank())) {
                 return true;
             }
         }
